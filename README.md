@@ -1,16 +1,51 @@
-# React + Vite
+# Proyecto Vehículos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Descripción
+Aplicación web para la gestión de vehículos con autenticación de usuarios y CRUD completo.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Características principales
+- Login de usuarios
+- CRUD de vehículos
+- Validaciones en backend
+- API REST
+- Interfaz moderna y responsive
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ⚙️ Tecnologías
+### Frontend
+- React
+- Vite
+- Material UI
+- Axios
 
-## Expanding the ESLint configuration
+### Backend
+- Node.js
+- Express
+- MongoDB
+- JWT
+- CORS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🏗️ Arquitectura
+Frontend (React) ↔ API REST (Express) ↔ Base de datos (MongoDB)
+
+---
+
+## 💻 Instalación
+
+### Backend
+```bash
+cd backend
+npm install
+npm run dev
+<img width="1365" height="627" alt="image" src="https://github.com/user-attachments/assets/3ece8bb3-15fc-4ed2-b3b8-90d62a9a73ce" />
+
+
+
+Nombre: Mariel SUsej Hernández Mangarre
+Proyecto académico: Sistema de Vehículos
+Año: 2026
