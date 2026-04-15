@@ -1,0 +1,153 @@
+:root {
+  /* 🎨 COLORES BASE MEJORADOS (MÁS CONTRASTE) */
+  --text: #1f2937;        /* antes muy claro */
+  --text-h: #0f172a;      /* títulos más fuertes */
+  --bg: #ffffff;
+  --border: #e5e7eb;
+
+  /* 💻 CODE */
+  --code-bg: #f3f4f6;
+
+  /* 🎯 ACCENT (mantiene tu estilo pero más limpio) */
+  --accent: #7c3aed;
+  --accent-bg: rgba(124, 58, 237, 0.1);
+  --accent-border: rgba(124, 58, 237, 0.4);
+
+  /* 🧩 SOCIAL */
+  --social-bg: rgba(243, 244, 246, 0.7);
+
+  /* 🌫 SHADOW MÁS SUAVE */
+  --shadow:
+    rgba(0, 0, 0, 0.08) 0 10px 20px,
+    rgba(0, 0, 0, 0.05) 0 4px 10px;
+
+  /* 🔤 TIPOGRAFÍA */
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.2px;
+
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 📱 RESPONSIVE FONT */
+@media (max-width: 1024px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+/* 🌑 DARK MODE MEJORADO */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #e5e7eb;
+    --text-h: #ffffff;
+    --bg: #0f172a;
+    --border: #1f2937;
+    --code-bg: #111827;
+
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.4);
+
+    --social-bg: rgba(31, 41, 55, 0.5);
+
+    --shadow:
+      rgba(0, 0, 0, 0.5) 0 10px 20px,
+      rgba(0, 0, 0, 0.3) 0 4px 10px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+/* 🧱 BASE */
+body {
+  margin: 0;
+}
+
+/* 📦 APP CONTAINER */
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 🧠 TITLES */
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* 🟣 H1 */
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.5px;
+  margin: 32px 0;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+
+/* 🟣 H2 */
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.2px;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 1024px) {
+  h2 {
+    font-size: 20px;
+  }
+}
+
+/* 📄 TEXT */
+p {
+  margin: 0;
+}
+
+/* 💻 CODE STYLE */
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 6px;
+  color: var(--text-h);
+}
+
+/* 🧾 CODE BLOCK */
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+* {
+  color: var(--text);
+}
