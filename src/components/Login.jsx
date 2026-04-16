@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 
 export default function Login() {
-  const { login } = useAuth();
   const navigate = useNavigate();
+
+  // 🔥 FIX: faltaba esto
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("admin@demo.com");
   const [password, setPassword] = useState("123456");
@@ -14,8 +16,6 @@ export default function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("📤 ENVIANDO:", { email, password }); // 🔥 DEBUG CLAVE
 
     if (!email || !password) {
       return alert("Completa los campos");
@@ -25,28 +25,22 @@ export default function Login() {
       setLoading(true);
 
       const res = await loginRequest({
-        email: email.trim().toLowerCase(),
+        email: email.toLowerCase().trim(),
         password: password.trim(),
       });
 
-      console.log("📥 RESPUESTA:", res.data); // 🔥 DEBUG
+      // 🔥 seguridad: verificar token
+      const token = res?.data?.token;
 
-      if (!res.data?.token) {
-        throw new Error("No llegó token del backend");
+      if (!token) {
+        throw new Error("No se recibió token del servidor");
       }
 
-      login(res.data.token);
+      login(token);
       navigate("/app");
 
     } catch (err) {
-      console.log("❌ ERROR LOGIN:", err);
-
-      alert(
-        err?.response?.data?.message ||
-        err.message ||
-        "Error al iniciar sesión"
-      );
-
+      alert(err?.response?.data?.message || err.message || "Error al iniciar sesión");
     } finally {
       setLoading(false);
     }
@@ -54,6 +48,7 @@ export default function Login() {
 
   return (
     <div className="login-wrapper">
+
       <div className="login-card">
 
         {/* HEADER */}

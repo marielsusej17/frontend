@@ -1,18 +1,25 @@
 import axios from "axios";
 
+// 🔥 URL del backend (Render en producción)
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://backend-z35t.onrender.com/api";
+
 const api = axios.create({
-  baseURL: "https://backend-z35t.onrender.com/api", // ✅ TU BACKEND
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Token automático
+// 🔐 Interceptor para token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
