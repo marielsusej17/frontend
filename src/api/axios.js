@@ -3,7 +3,7 @@ import axios from "axios";
 // ✅ FIX: evitar undefined en Vercel
 const API_URL =
   import.meta.env.VITE_API_URL ??
-  "https://backend-z35t.onrender.com/api/vehiculos";
+  "https://backend-z35t.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_URL,
