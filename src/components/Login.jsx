@@ -15,6 +15,8 @@ export default function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("📤 ENVIANDO:", { email, password }); // 🔥 DEBUG CLAVE
+
     if (!email || !password) {
       return alert("Completa los campos");
     }
@@ -23,15 +25,28 @@ export default function Login() {
       setLoading(true);
 
       const res = await loginRequest({
-        email: email.toLowerCase().trim(),
+        email: email.trim().toLowerCase(),
         password: password.trim(),
       });
+
+      console.log("📥 RESPUESTA:", res.data); // 🔥 DEBUG
+
+      if (!res.data?.token) {
+        throw new Error("No llegó token del backend");
+      }
 
       login(res.data.token);
       navigate("/app");
 
     } catch (err) {
-      alert(err?.response?.data?.message || "Error al iniciar sesión");
+      console.log("❌ ERROR LOGIN:", err);
+
+      alert(
+        err?.response?.data?.message ||
+        err.message ||
+        "Error al iniciar sesión"
+      );
+
     } finally {
       setLoading(false);
     }
@@ -39,7 +54,6 @@ export default function Login() {
 
   return (
     <div className="login-wrapper">
-
       <div className="login-card">
 
         {/* HEADER */}
