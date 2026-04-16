@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 
 export default function Login() {
-  const navigate = useNavigate();
-
-  // 🔥 FIX: faltaba esto
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("admin@demo.com");
   const [password, setPassword] = useState("123456");
@@ -29,18 +27,11 @@ export default function Login() {
         password: password.trim(),
       });
 
-      // 🔥 seguridad: verificar token
-      const token = res?.data?.token;
-
-      if (!token) {
-        throw new Error("No se recibió token del servidor");
-      }
-
-      login(token);
+      login(res.data.token);
       navigate("/app");
 
     } catch (err) {
-      alert(err?.response?.data?.message || err.message || "Error al iniciar sesión");
+      alert(err?.response?.data?.message || "Error al iniciar sesión");
     } finally {
       setLoading(false);
     }

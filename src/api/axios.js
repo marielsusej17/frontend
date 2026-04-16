@@ -1,17 +1,16 @@
 import axios from "axios";
 
-// ✅ FIX: evitar undefined en Vercel
+// ✅ Backend LOCAL
 const API_URL =
-  import.meta.env.VITE_API_URL ??
-  "https://backend-z35t.onrender.com/api";
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:3000/api";
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
-    withCredentials: true,
-
+  withCredentials: true, // recomendado
 });
 
 // 🔐 Interceptor para token
