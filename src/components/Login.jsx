@@ -27,11 +27,31 @@ export default function Login() {
         password: password.trim(),
       });
 
-      login(res.data.token);
+      console.log("RESPUESTA LOGIN:", res.data);
+
+      // 🔥 soporta varias estructuras posibles
+      const token =
+        res.data?.token ||
+        res.data?.data?.token ||
+        res.data?.accessToken;
+
+      if (!token) {
+        throw new Error("No llegó el token desde el backend");
+      }
+
+      login(token);
       navigate("/app");
 
     } catch (err) {
-      alert(err?.response?.data?.message || "Error al iniciar sesión");
+      console.log("ERROR LOGIN:", err.response?.data || err.message);
+
+      alert(
+        err.response?.data?.msg ||
+        err.response?.data?.message ||
+        err.message ||
+        "Error al iniciar sesión"
+      );
+
     } finally {
       setLoading(false);
     }
@@ -39,17 +59,14 @@ export default function Login() {
 
   return (
     <div className="login-wrapper">
-
       <div className="login-card">
 
-        {/* HEADER */}
         <div className="login-header">
           <div className="icon">🚗</div>
           <h1>Velocity Drive</h1>
           <p>Accede a tu cuenta</p>
         </div>
 
-        {/* FORM */}
         <form onSubmit={onSubmit} className="login-form">
 
           <div className="input-group">
@@ -80,7 +97,6 @@ export default function Login() {
 
         </form>
 
-        {/* FOOTER */}
         <div className="login-footer">
           <span onClick={() => navigate("/")}>
             ← Volver al inicio
