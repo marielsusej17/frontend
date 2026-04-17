@@ -25,7 +25,10 @@ export default function App() {
   const { isAuth, logout } = useAuth();
 
   const [items, setItems] = useState([]);
-  const [editing, setEditing] = useState(null); // 🔥 EDIT STATE
+  const [editing, setEditing] = useState(null);
+
+  // 🔎 BUSCADOR
+  const [search, setSearch] = useState("");
 
   /* 🔄 CARGAR VEHÍCULOS */
   const loadVehiculos = async () => {
@@ -41,6 +44,18 @@ export default function App() {
   useEffect(() => {
     loadVehiculos();
   }, []);
+
+  // 🔎 FILTRO
+  const filteredItems = items.filter((vehiculo) => {
+    const text = search.toLowerCase();
+
+    return (
+      vehiculo.placa.toLowerCase().includes(text) ||
+      vehiculo.marca.toLowerCase().includes(text) ||
+      vehiculo.modelo.toLowerCase().includes(text) ||
+      vehiculo.anio.toString().includes(text)
+    );
+  });
 
   return (
     <BrowserRouter>
@@ -88,7 +103,7 @@ export default function App() {
                     <VehiculoForm
                       onSaved={() => {
                         loadVehiculos();
-                        setEditing(null); // limpiar edición después de guardar
+                        setEditing(null);
                       }}
                       editing={editing}
                       setEditing={setEditing}
@@ -99,10 +114,19 @@ export default function App() {
                   <div className="card">
                     <h2>📋 Vehículos registrados</h2>
 
+                    {/* 🔎 INPUT BUSCADOR */}
+                    <input
+                      type="text"
+                      placeholder="🔍 Buscar por placa, marca, modelo o año..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="search-input"
+                    />
+
                     <VehiculoList
-                      items={items}
+                      items={filteredItems} // 🔥 lista filtrada
                       onChange={loadVehiculos}
-                      setEditing={setEditing} // 🔥 PARA EDITAR
+                      setEditing={setEditing}
                     />
                   </div>
 

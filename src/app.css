@@ -143,3 +143,12 @@
   background: rgba(255,255,255,0.05);
   border-radius: 8px;
 }
+.search-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}

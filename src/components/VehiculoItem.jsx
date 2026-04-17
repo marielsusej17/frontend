@@ -1,9 +1,12 @@
 import { deleteVehiculo } from "../services/vehiculo.service";
 
 export default function VehiculoItem({ vehiculo, onChange, setEditing }) {
+  
   const handleDelete = async () => {
+    if (!vehiculo?.placa) return;
+
     const confirmacion = window.confirm(
-      `¿Estás seguro de que deseas eliminar el vehículo con placa: ${vehiculo.placa}?`
+      `¿Estás seguro de eliminar el vehículo con placa: ${vehiculo.placa}?`
     );
 
     if (!confirmacion) return;
@@ -26,8 +29,8 @@ export default function VehiculoItem({ vehiculo, onChange, setEditing }) {
 
   return (
     <tr style={{ textAlign: "center" }}>
-      
-      {/* 🚗 PLACA (MEJORADA) */}
+
+      {/* 🚗 PLACA */}
       <td>
         <span
           style={{
@@ -37,24 +40,25 @@ export default function VehiculoItem({ vehiculo, onChange, setEditing }) {
             borderRadius: "6px",
             display: "inline-block",
             letterSpacing: "1px",
+            backgroundColor: "#2c3e50", // 🔥 mejor visibilidad
           }}
         >
-          {vehiculo.placa}
+          {vehiculo?.placa || "-"}
         </span>
       </td>
 
       {/* MARCA */}
-      <td>{vehiculo.marca}</td>
+      <td>{vehiculo?.marca || "-"}</td>
 
       {/* MODELO */}
-      <td>{vehiculo.modelo}</td>
+      <td>{vehiculo?.modelo || "-"}</td>
 
       {/* AÑO */}
-      <td>{vehiculo.anio}</td>
+      <td>{vehiculo?.anio || "-"}</td>
 
       {/* MANTENIMIENTOS */}
       <td>
-        {vehiculo.mantenimientos?.length > 0 ? (
+        {vehiculo?.mantenimientos?.length > 0 ? (
           <span style={{ color: "green" }}>
             {vehiculo.mantenimientos.length} registro(s)
           </span>
