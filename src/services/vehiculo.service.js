@@ -1,10 +1,8 @@
 import api from "../api/axios";
 
-/** Listar vehículos (con búsqueda opcional) */
-export const listVehiculos = (q = "") =>
-  api.get("/vehiculos", {
-    params: { q }
-  });
+/** Listar vehículos */
+export const listVehiculos = (params = {}) =>
+  api.get("/vehiculos", { params });
 
 /** Crear vehículo */
 export const createVehiculo = (data) =>
