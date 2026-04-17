@@ -124,3 +124,17 @@
     transform: translateY(0);
   }
 }
+.login-extra {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.link {
+  color: #3498db;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

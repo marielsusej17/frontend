@@ -27,9 +27,6 @@ export default function Login() {
         password: password.trim(),
       });
 
-      console.log("RESPUESTA LOGIN:", res.data);
-
-      // 🔥 soporta varias estructuras posibles
       const token =
         res.data?.token ||
         res.data?.data?.token ||
@@ -43,15 +40,12 @@ export default function Login() {
       navigate("/app");
 
     } catch (err) {
-      console.log("ERROR LOGIN:", err.response?.data || err.message);
-
       alert(
         err.response?.data?.msg ||
         err.response?.data?.message ||
         err.message ||
         "Error al iniciar sesión"
       );
-
     } finally {
       setLoading(false);
     }
@@ -91,13 +85,26 @@ export default function Login() {
             <label>Contraseña</label>
           </div>
 
+          {/* 🔥 OLVIDASTE CONTRASEÑA (SOLO VISUAL) */}
+          <div className="login-extra">
+            <span className="link">
+              ¿Olvidaste tu contraseña?
+            </span>
+          </div>
+
           <button disabled={loading} className="login-submit">
             {loading ? "Ingresando..." : "Ingresar"}
           </button>
 
         </form>
 
+        {/* 🔥 REGISTRO (SOLO VISUAL) */}
         <div className="login-footer">
+          <p>
+            ¿No tienes cuenta?{" "}
+            <span className="link">Regístrate</span>
+          </p>
+
           <span onClick={() => navigate("/")}>
             ← Volver al inicio
           </span>
