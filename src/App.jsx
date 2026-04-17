@@ -14,9 +14,7 @@ import { listVehiculos } from "./services/vehiculo.service";
 function ProtectedRoute({ children }) {
   const { isAuth } = useAuth();
 
-  if (!isAuth) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!isAuth) return <Navigate to="/login" replace />;
 
   return children;
 }
@@ -28,7 +26,7 @@ export default function App() {
   const [editing, setEditing] = useState(null);
   const [search, setSearch] = useState("");
 
-  /* 🔄 CARGAR VEHÍCULOS (CON BUSCADOR) */
+  /* 🔄 CARGAR VEHÍCULOS */
   const loadVehiculos = async (q = "") => {
     try {
       const res = await listVehiculos(q);
@@ -38,20 +36,23 @@ export default function App() {
     }
   };
 
-  /* 🔄 CARGA INICIAL + BUSQUEDA */
+  /* 🔥 SOLO CARGA INICIAL */
   useEffect(() => {
+    loadVehiculos("");
+  }, []);
+
+  /* 🔎 BUSCAR CON BOTÓN (NO AUTOMÁTICO) */
+  const handleSearch = () => {
     loadVehiculos(search);
-  }, [search]);
+  };
 
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* 🟢 PUBLIC */}
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
 
-        {/* 🔒 PRIVATE APP */}
         <Route
           path="/app"
           element={
@@ -66,22 +67,17 @@ export default function App() {
                       🚗 <span>Velocity Drive</span>
                     </h1>
 
-                    <button
-                      onClick={logout}
-                      className="logout-btn"
-                      disabled={!isAuth}
-                    >
+                    <button onClick={logout} className="logout-btn">
                       Cerrar sesión
                     </button>
 
                   </div>
                 </header>
 
-                {/* MAIN CONTENT */}
                 <main className="app-main">
 
-                  {/* 🔎 BUSCADOR (AQUÍ ESTÁ LO NUEVO) */}
-                  <div className="card">
+                  {/* 🔎 BUSCADOR CON BOTÓN */}
+                  <div className="card" style={{ display: "flex", gap: "10px" }}>
                     <input
                       type="text"
                       placeholder="Buscar por placa, marca o modelo..."
@@ -89,6 +85,10 @@ export default function App() {
                       onChange={(e) => setSearch(e.target.value)}
                       className="search-input"
                     />
+
+                    <button onClick={handleSearch}>
+                      🔍 Buscar
+                    </button>
                   </div>
 
                   {/* FORM */}
@@ -99,7 +99,7 @@ export default function App() {
 
                     <VehiculoForm
                       onSaved={() => {
-                        loadVehiculos(search);
+                        loadVehiculos("");
                         setEditing(null);
                       }}
                       editing={editing}
@@ -125,7 +125,6 @@ export default function App() {
           }
         />
 
-        {/* 🔁 FALLBACK */}
         <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
