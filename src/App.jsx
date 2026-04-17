@@ -25,22 +25,23 @@ export default function App() {
   const { isAuth, logout } = useAuth();
 
   const [items, setItems] = useState([]);
-  const [editing, setEditing] = useState(null); // 🔥 EDIT STATE
+  const [editing, setEditing] = useState(null);
+  const [search, setSearch] = useState(""); // 🔥 BUSCADOR
 
   /* 🔄 CARGAR VEHÍCULOS */
-  const loadVehiculos = async () => {
+  const loadVehiculos = async (value = "") => {
     try {
-      const res = await listVehiculos();
-      setItems(res.data.items || []);
+      const res = await listVehiculos(value);
+      setItems(res.data || []);
     } catch (err) {
       console.log(err);
     }
   };
 
-  /* 🔄 CARGA INICIAL */
+  /* 🔄 CARGA INICIAL + BUSCADOR EN VIVO */
   useEffect(() => {
-    loadVehiculos();
-  }, []);
+    loadVehiculos(search);
+  }, [search]);
 
   return (
     <BrowserRouter>
@@ -50,7 +51,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
 
-        {/* 🔒 PRIVATE APP */}
+        {/* 🔒 PRIVATE */}
         <Route
           path="/app"
           element={
@@ -76,8 +77,19 @@ export default function App() {
                   </div>
                 </header>
 
-                {/* MAIN CONTENT */}
+                {/* MAIN */}
                 <main className="app-main">
+
+                  {/* 🔎 BUSCADOR */}
+                  <div className="card">
+                    <input
+                      type="text"
+                      placeholder="🔎 Buscar por placa, marca o modelo..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="search-input"
+                    />
+                  </div>
 
                   {/* FORM */}
                   <div className="card">
@@ -87,8 +99,8 @@ export default function App() {
 
                     <VehiculoForm
                       onSaved={() => {
-                        loadVehiculos();
-                        setEditing(null); // limpiar edición después de guardar
+                        loadVehiculos(search);
+                        setEditing(null);
                       }}
                       editing={editing}
                       setEditing={setEditing}
@@ -101,8 +113,8 @@ export default function App() {
 
                     <VehiculoList
                       items={items}
-                      onChange={loadVehiculos}
-                      setEditing={setEditing} // 🔥 PARA EDITAR
+                      onChange={() => loadVehiculos(search)}
+                      setEditing={setEditing}
                     />
                   </div>
 
