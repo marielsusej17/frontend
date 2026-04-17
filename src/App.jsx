@@ -30,18 +30,20 @@ export default function App() {
   const loadVehiculos = async (q = "") => {
     try {
       const res = await listVehiculos(q);
+
+      // 🔥 FIX IMPORTANTE: el backend devuelve { items }
       setItems(res.data.items || []);
     } catch (err) {
       console.log("ERROR LOAD VEHICULOS:", err);
     }
   };
 
-  /* 🔥 SOLO CARGA INICIAL */
+  /* 🔥 CARGA INICIAL */
   useEffect(() => {
     loadVehiculos("");
   }, []);
 
-  /* 🔎 BUSCAR CON BOTÓN (NO AUTOMÁTICO) */
+  /* 🔎 BUSCAR */
   const handleSearch = () => {
     loadVehiculos(search);
   };
@@ -59,7 +61,6 @@ export default function App() {
             <ProtectedRoute>
               <div className="app-wrapper">
 
-                {/* HEADER */}
                 <header className="app-header">
                   <div className="app-header-content">
 
@@ -76,7 +77,7 @@ export default function App() {
 
                 <main className="app-main">
 
-                  {/* 🔎 BUSCADOR CON BOTÓN */}
+                  {/* 🔎 BUSCADOR */}
                   <div className="card" style={{ display: "flex", gap: "10px" }}>
                     <input
                       type="text"
@@ -99,7 +100,7 @@ export default function App() {
 
                     <VehiculoForm
                       onSaved={() => {
-                        loadVehiculos("");
+                        loadVehiculos(""); // recarga todo
                         setEditing(null);
                       }}
                       editing={editing}
@@ -107,7 +108,7 @@ export default function App() {
                     />
                   </div>
 
-                  {/* LIST */}
+                  {/* LISTA */}
                   <div className="card">
                     <h2>📋 Vehículos registrados</h2>
 
